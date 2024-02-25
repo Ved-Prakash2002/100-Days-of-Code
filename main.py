@@ -1,22 +1,7 @@
-from menu import Menu, MenuItem
-from coffee_maker import CoffeeMaker
-from money_machine import MoneyMachine
+import pandas as pd
 
-money_machine = MoneyMachine()
-coffee_maker = CoffeeMaker()
-menu = Menu()
+data = pd.read_csv("2018_Central_Park_Squirrel_Census_-_Squirrel_Data.csv")
+primary_fur_colour = data["Primary Fur Color"].value_counts()
 
-is_on = True
-
-while is_on is True:
-    options = menu.get_items()
-    choice = input(f"What would you like? {options}: ")
-    if choice == 'off':
-        is_on = False
-    elif choice == 'report':
-        coffee_maker.report()
-        money_machine.report()
-    else:
-        drink = menu.find_drink(choice)
-        if coffee_maker.is_resource_sufficient(drink) and money_machine.make_payment(drink.cost) is True:
-            coffee_maker.make_coffee(drink)
+primary_fur_colour_data = pd.DataFrame(primary_fur_colour)
+primary_fur_colour_data.to_csv("squirrel_count.csv")
